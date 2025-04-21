@@ -209,6 +209,26 @@
                     </html>
                 `);
                 newWindow.document.close();
+                const apiURL = "https://api.sheetbest.com/sheets/f14be2c3-ad61-4cfe-a44b-05acb934fda5";
+
+
+                iterationResults.forEach(result => {
+                    fetch(apiURL, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            id: result.id,
+                            pumps: result.pumps,
+                            exploded: result.exploded,
+                            time: result.time
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => console.log("✔️ Enviado:", data))
+                    .catch(err => console.error("❌ Error al enviar:", err));
+                });
             }
         };
         
