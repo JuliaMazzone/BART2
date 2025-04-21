@@ -1,5 +1,5 @@
 /**
- * BART - jQuery plugin for creating the a Ballon Analogue Risk Task
+ * BART - jQuery plugin for creating the a Ballon Analogue Risk Task }}}adaptado Julia Mazzone
  *
  * @author    Timo Gnambs <timo@gnambs.at>
  * @copyright (c) 2013-2016 Timo Gnambs (http://timo.gnambs.at)
