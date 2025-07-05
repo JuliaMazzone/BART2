@@ -152,15 +152,15 @@
                                              //    number of explosions for each balloon
             frmids_time:     [],             // optional ids of hidden form elements to save 
                                              //    mean latency between pumps (excluding time before first pump)
-            txt_cashin: '$$ Cash in $$',     // text on 'Cash in' button
-            txt_inflate: 'Inflate balloon',  // text on 'Inflate' button
-            txt_next:    'Next balloon',     // text on 'Next' button
-            txt_balloon_number: 'Balloon number: ',          // text for balloon number
-            txt_number_of_pumps: 'Number of pumps: ',        // text for number of pumps
-            txt_current_earned: 'Current earned: ',          // text for current earnings
-            txt_total_earned: 'Total earned: ',              // text for total earnings
-            txt_prob_explosion: 'Probability of explosion:', // text for probability of explosion
-            txt_pumps_used: 'Max. available pumps used:',    // text for percentage of used pumps
+            txt_cashin: 'Cobrar',                            // text on 'Cash in' button
+            txt_inflate: 'Inflar globo',                     // text on 'Inflate' button
+            txt_next:    'Siguiente globo',                  // text on 'Next' button
+            txt_balloon_number: 'Número de globo: ',          // text for balloon number
+            txt_number_of_pumps: 'Número de infladas: ',      // text for number of pumps
+            txt_current_earned: 'Ganancia actual: ',          // text for current earnings
+            txt_total_earned: 'Ganancia total: ',             // text for total earnings
+            txt_prob_explosion: 'Probabilidad de explosión:', // text for probability of explosion
+            txt_pumps_used: 'Porcentaje de infladas usadas:', // text for percentage of used pumps
             onload:    function() {},        // function to run before loading the script 
             
             
@@ -171,7 +171,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th># Pumps</th>
+                                <th>Nº de infladas</th>
                                 <th>¿Explotó?</th>
                                 <th>Tiempo Promedio (t)</th>
                             </tr>
