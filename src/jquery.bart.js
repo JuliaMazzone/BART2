@@ -323,7 +323,7 @@
             s.exploded = false;
             s.earned = 0;
             s.popseq = [];
-            s.time = [];
+            s.time = [Date.now()];
             for (var i=1; i <= s.popprob; i++) s.popseq.push(i);
             s.popseq.sort(randOrder);               // randomized
                 
@@ -423,7 +423,7 @@
             this.earned = (new Number(this.pumps * this.earnings)).toFixed(2);
             
             // add time stamp of pump
-            this.time.push($.now());
+            this.time.push(Date.now());
                                 
             // sound
             if(opts.sounds == true & this.pumps > 0) {
@@ -465,7 +465,7 @@
             this.earned = 0;
 
             // add time stamp of pump
-            this.time.push($.now());
+            this.time.push(Date.now());
             
             // save results
             this.save();
@@ -804,6 +804,7 @@
                     // show/hide buttons
                     butInflate.hide();
                     butCashin.hide();
+                    bal.time.push(Date.now());
                     bal.save();
                     if(balcnt+1 < bs.length) butNext.show();
                     else opts.onend();
