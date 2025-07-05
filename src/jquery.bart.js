@@ -179,6 +179,8 @@
                         <tbody>
                 `;
 
+                const email = window.userEmail || "";
+
                 iterationResults.forEach(result => {
                     resultsTable += `
                         <tr>
@@ -224,6 +226,7 @@
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
+                            email: email,
                             id: result.id,
                             pumps: result.pumps,
                             exploded: result.exploded,
@@ -823,4 +826,3 @@
         };
     
 })(jQuery);
-
