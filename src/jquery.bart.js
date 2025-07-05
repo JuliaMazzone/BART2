@@ -219,37 +219,31 @@
                     const now = new Date();
                     const fecha = `${now.getFullYear().toString().slice(-2)}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
 
-                    // Enviar los datos a la API
-                    if (typeof result.avgTime !== "number" || isNaN(result.avgTime)) {
-                        result.avgTime = 0;
-                    }
-
-                    console.log("\ud83d\udce4 Enviando datos:", {
+                    // Validar tiempo promedio
+                    var avg = (typeof result.avgTime === 'number' && !isNaN(result.avgTime)) ? result.avgTime : 0;
+                    var payload = {
                         email: email,
                         id: result.id,
                         pumps: result.pumps,
                         exploded: result.exploded,
-                        avg_time: result.avgTime,
-                        time: JSON.stringify(result.time),
+                        time: JSON.stringify(result.time || []),
+                        avg_time: avg,
                         Fecha: fecha
-                    });
+                    };
+
+                    console.log("\ud83d\udce4 Enviando datos:", payload);
 
                     fetch(apiURL, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({
-                            email: email,
-                            id: result.id,
-                            pumps: result.pumps,
-                            exploded: result.exploded,
-                            avg_time: result.avgTime,
-                            time: JSON.stringify(result.time),
-                            Fecha: fecha // Agregar el campo Fecha
-                        })
+                        body: JSON.stringify(payload)
                     })
-                    .then(res => res.json())
+                    .then(res => {
+                        if(!res.ok) throw new Error('Estado ' + res.status);
+                        return res.json();
+                    })
                     .then(data => console.log("✔️ Enviado:", data))
                     .catch(err => console.error("❌ Error al enviar:", err));
                 });
