@@ -323,7 +323,7 @@
             s.exploded = false;
             s.earned = 0;
             s.popseq = [];
-            s.time = [Date.now()];
+            s.time = [];
             for (var i=1; i <= s.popprob; i++) s.popseq.push(i);
             s.popseq.sort(randOrder);               // randomized
                 
@@ -422,8 +422,6 @@
             // calculate current earnings
             this.earned = (new Number(this.pumps * this.earnings)).toFixed(2);
             
-            // add time stamp of pump
-            this.time.push(Date.now());
                                 
             // sound
             if(opts.sounds == true & this.pumps > 0) {
@@ -464,8 +462,6 @@
             // current earnings
             this.earned = 0;
 
-            // add time stamp of pump
-            this.time.push(Date.now());
             
             // save results
             this.save();
@@ -487,9 +483,12 @@
             // individual result string
             $('#' + opts.frmids_pumps[this.id-1]).attr( { value: this.pumps } );
             $('#' + opts.frmids_exploded[this.id-1]).attr( { value: (this.exploded)*1 } );
-            for(var i = 1, t = 0; i < this.time.length; i ++)  t += this.time[i] - this.time[i-1];
-            if(this.pumps > 1) t = Math.round(t / (this.pumps-1));
-            else t = -9;            
+            var t = 0;
+            for(var i = 1; i < this.time.length; i++) {
+                t += this.time[i] - this.time[i-1];
+            }
+            if(this.time.length > 1) t = Math.round(t / (this.time.length - 1));
+            else t = 0;
             $('#' + opts.frmids_time[this.id-1]).attr( { value: t });
             
             // complete result string
@@ -684,7 +683,10 @@
                     margin: '0 20px' 
                 })
                 .on('click.bart', function(e) {
-                        
+
+                    // log time of each pump
+                    bal.time.push(Date.now());
+
                     // check for explosion
                     bal.popseq.sort(randOrder);
                     if(bal.popseq.shift() == 1) {
