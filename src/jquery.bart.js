@@ -131,7 +131,7 @@
                 oninflate: function() {},    // function to run after inflation
                 onexplode: function() {}     // function to run after explosion
             },
-            bgcol:               '#FFF',     // background color for complete board
+            bgcol:               '#111',     // background color for complete board
             w:                   600,        // width of board (in pixel)
             h:                   600,        // height of board (in pixel)
             showpumpcount: true,             // show number of pumps on board
@@ -152,26 +152,26 @@
                                              //    number of explosions for each balloon
             frmids_time:     [],             // optional ids of hidden form elements to save 
                                              //    mean latency between pumps (excluding time before first pump)
-            txt_cashin: '$$ Cash in $$',     // text on 'Cash in' button
-            txt_inflate: 'Inflate balloon',  // text on 'Inflate' button
-            txt_next:    'Next balloon',     // text on 'Next' button
-            txt_balloon_number: 'Balloon number: ',          // text for balloon number
-            txt_number_of_pumps: 'Number of pumps: ',        // text for number of pumps
-            txt_current_earned: 'Current earned: ',          // text for current earnings
-            txt_total_earned: 'Total earned: ',              // text for total earnings
-            txt_prob_explosion: 'Probability of explosion:', // text for probability of explosion
-            txt_pumps_used: 'Max. available pumps used:',    // text for percentage of used pumps
+            txt_cashin: 'Cobrar',                            // text on 'Cash in' button
+            txt_inflate: 'Inflar globo',                     // text on 'Inflate' button
+            txt_next:    'Siguiente globo',                  // text on 'Next' button
+            txt_balloon_number: 'Número de globo: ',          // text for balloon number
+            txt_number_of_pumps: 'Número de infladas: ',      // text for number of pumps
+            txt_current_earned: 'Ganancia actual: ',          // text for current earnings
+            txt_total_earned: 'Ganancia total: ',             // text for total earnings
+            txt_prob_explosion: 'Probabilidad de explosión:', // text for probability of explosion
+            txt_pumps_used: 'Porcentaje de infladas usadas:', // text for percentage of used pumps
             onload:    function() {},        // function to run before loading the script 
             
             
             onend: function() {
                 // Mostrar los resultados de todas las iteraciones
                 var resultsTable = `
-                    <table border="1" style="border-collapse: collapse; width: 100%; text-align: center;">
+                    <table class="results-table">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th># Pumps</th>
+                                <th>Nº de infladas</th>
                                 <th>¿Explotó?</th>
                                 <th>Tiempo Promedio (t)</th>
                             </tr>
@@ -179,13 +179,15 @@
                         <tbody>
                 `;
 
+                const email = window.userEmail || "";
+
                 iterationResults.forEach(result => {
                     resultsTable += `
                         <tr>
                             <td>${result.id}</td>
                             <td>${result.pumps}</td>
                             <td>${result.exploded}</td>
-                            <td>${result.time}</td>
+                            <td>${result.avgTime}</td>
                         </tr>
                     `;
                 });
@@ -201,6 +203,8 @@
                     <html>
                         <head>
                             <title>Resultados</title>
+                            <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+                            <link rel="stylesheet" type="text/css" href="src/casino.css">
                         </head>
                         <body>
                             <h3>Resultados de las iteraciones</h3>
@@ -217,21 +221,31 @@
                     const now = new Date();
                     const fecha = `${now.getFullYear().toString().slice(-2)}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
 
-                    // Enviar los datos a la API
+                    // Validar tiempo promedio
+                    var avg = (typeof result.avgTime === 'number' && !isNaN(result.avgTime)) ? result.avgTime : 0;
+                    var payload = {
+                        email: email,
+                        id: result.id,
+                        pumps: result.pumps,
+                        exploded: result.exploded,
+                        time: JSON.stringify(result.time || []),
+                        avg_time: avg,
+                        Fecha: fecha
+                    };
+
+                    console.log("\ud83d\udce4 Enviando datos:", payload);
+
                     fetch(apiURL, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({
-                            id: result.id,
-                            pumps: result.pumps,
-                            exploded: result.exploded,
-                            time: result.time,
-                            Fecha: fecha // Agregar el campo Fecha
-                        })
+                        body: JSON.stringify(payload)
                     })
-                    .then(res => res.json())
+                    .then(res => {
+                        if(!res.ok) throw new Error('Estado ' + res.status);
+                        return res.json();
+                    })
                     .then(data => console.log("✔️ Enviado:", data))
                     .catch(err => console.error("❌ Error al enviar:", err));
                 });
@@ -320,7 +334,7 @@
             s.exploded = false;
             s.earned = 0;
             s.popseq = [];
-            s.time = [];
+            s.time = [Date.now()];
             for (var i=1; i <= s.popprob; i++) s.popseq.push(i);
             s.popseq.sort(randOrder);               // randomized
                 
@@ -419,8 +433,6 @@
             // calculate current earnings
             this.earned = (new Number(this.pumps * this.earnings)).toFixed(2);
             
-            // add time stamp of pump
-            this.time.push($.now());
                                 
             // sound
             if(opts.sounds == true & this.pumps > 0) {
@@ -461,9 +473,10 @@
             // current earnings
             this.earned = 0;
 
-            // add time stamp of pump
-            this.time.push($.now());
-            
+
+            // add time stamp of explosion
+            this.time.push(Date.now());
+
             // save results
             this.save();
             
@@ -484,9 +497,12 @@
             // individual result string
             $('#' + opts.frmids_pumps[this.id-1]).attr( { value: this.pumps } );
             $('#' + opts.frmids_exploded[this.id-1]).attr( { value: (this.exploded)*1 } );
-            for(var i = 1, t = 0; i < this.time.length; i ++)  t += this.time[i] - this.time[i-1];
-            if(this.pumps > 1) t = Math.round(t / (this.pumps-1));
-            else t = -9;            
+            var t = 0;
+            for(var i = 1; i < this.time.length; i++) {
+                t += this.time[i] - this.time[i-1];
+            }
+            if(this.time.length > 1) t = Math.round(t / (this.time.length - 1));
+            else t = 0;
             $('#' + opts.frmids_time[this.id-1]).attr( { value: t });
             
             // complete result string
@@ -502,7 +518,8 @@
                 id: this.id,
                 pumps: this.pumps,
                 exploded: this.exploded ? "Sí" : "No",
-                time: t
+                time: this.time.slice(),
+                avgTime: t
             });
         }
         
@@ -592,8 +609,8 @@
                     y:         50,
                     layer:     true,
                     name:      'balnum',
-                    fillStyle: '#000',
-                    font:      '14pt Verdana, sans-serif',
+                    fillStyle: '#FFD700',
+                    font:      'bold 18pt Orbitron, sans-serif',
                     text:      opts.txt_balloon_number + ' 1 / ' + bs.length
                 });
             }
@@ -606,8 +623,8 @@
                     y:         bottomY,
                     layer:     true,
                     name:      'totearn',
-                    fillStyle: '#000',
-                    font:      '14pt Verdana, sans-serif',
+                    fillStyle: '#FFD700',
+                    font:      'bold 18pt Orbitron, sans-serif',
                     text:      opts.txt_total_earned + '0.00'
                 });
                 bottomY -= 50;
@@ -620,8 +637,8 @@
                     y:         bottomY,
                     layer:     true,
                     name:      'pumpnum',
-                    fillStyle: '#000',
-                    font:      '14pt Verdana, sans-serif',
+                    fillStyle: '#FFD700',
+                    font:      'bold 18pt Orbitron, sans-serif',
                     text:      opts.txt_number_of_pumps + '0'
                 });
                 bottomY -= 50;
@@ -634,8 +651,8 @@
                     y:         bottomY,
                     layer:     true,
                     name:      'curearn',
-                    fillStyle: '#000',
-                    font:      '14pt Verdana, sans-serif',
+                    fillStyle: '#FFD700',
+                    font:      'bold 18pt Orbitron, sans-serif',
                     text:      opts.txt_current_earned + '0.00'
                 });
             }
@@ -647,8 +664,8 @@
                     y:         200,
                     layer:     true,
                     name:      'popprob',
-                    fillStyle: '#000',
-                    font:      '14pt Verdana, sans-serif',
+                    fillStyle: '#FFD700',
+                    font:      'bold 18pt Orbitron, sans-serif',
                     text:      opts.txt_prob_explosion + "\n\n" + 
                                (new Number(Math.round(10000/bs[0].popprob)/100)).toFixed(2) + '%'
                 });
@@ -661,8 +678,8 @@
                     y:         200,
                     layer:     true,
                     name:      'pumuse',
-                    fillStyle: '#000',
-                    font:      '14pt Verdana, sans-serif',
+                    fillStyle: '#FFD700',
+                    font:      'bold 18pt Orbitron, sans-serif',
                     text:      opts.txt_pumps_used + "\n\n" + '0%'
                 });
             }
@@ -681,7 +698,10 @@
                     margin: '0 20px' 
                 })
                 .on('click.bart', function(e) {
-                        
+
+                    // log time of each pump
+                    bal.time.push(Date.now());
+
                     // check for explosion
                     bal.popseq.sort(randOrder);
                     if(bal.popseq.shift() == 1) {
@@ -801,6 +821,7 @@
                     // show/hide buttons
                     butInflate.hide();
                     butCashin.hide();
+                    bal.time.push(Date.now());
                     bal.save();
                     if(balcnt+1 < bs.length) butNext.show();
                     else opts.onend();
