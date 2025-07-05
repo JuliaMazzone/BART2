@@ -228,7 +228,6 @@
                         id: result.id,
                         pumps: result.pumps,
                         exploded: result.exploded,
-                        earned: result.earned, // 👈 NUEVO
                         time: this.time.slice(),
                         avgTime: t
                         Fecha: fecha
@@ -519,7 +518,6 @@
                 id: this.id,
                 pumps: this.pumps,
                 exploded: this.exploded ? "Sí" : "No",
-                earned: this.earned, // 👈 acá la agregás
                 time: this.time.slice(),
                 avgTime: t
             });
