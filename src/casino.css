@@ -1,0 +1,53 @@
+body {
+    background:#111;
+    color:#f8f8f8;
+    font-family:'Orbitron', sans-serif;
+    text-align:center;
+    margin:0;
+    padding:20px;
+}
+
+#startForm {
+    margin-top:40px;
+}
+
+#startForm input[type="email"] {
+    padding:10px;
+    font-size:16px;
+    border-radius:8px;
+    border:1px solid #444;
+}
+
+#startForm button {
+    padding:10px 20px;
+    background:linear-gradient(45deg,#c21500,#ffc500);
+    border:none;
+    border-radius:10px;
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+    box-shadow:0 0 10px rgba(255,215,0,0.5);
+    transition:transform 0.1s;
+    font-family:'Orbitron', sans-serif;
+}
+
+#startForm button:hover {
+    transform:scale(1.05);
+}
+
+.results-table {
+    background:#222;
+    color:#fff;
+    width:100%;
+    border-collapse:collapse;
+    font-family:'Orbitron', sans-serif;
+}
+.results-table th,
+.results-table td {
+    border:1px solid #444;
+    padding:8px;
+}
+.results-table th {
+    background:#333;
+    color:#ffd700;
+}
