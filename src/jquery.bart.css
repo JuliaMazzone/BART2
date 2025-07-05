@@ -10,6 +10,7 @@
     border: 2px solid #ffd700;
     background:#222;
     box-shadow:0 0 20px rgba(255,215,0,0.5);
+    margin:20px auto;
 }
 #bart input.BARTinflate,
 #bart input.BARTnext,
