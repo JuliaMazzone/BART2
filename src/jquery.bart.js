@@ -323,7 +323,7 @@
             s.exploded = false;
             s.earned = 0;
             s.popseq = [];
-            s.time = [];
+            s.time = [Date.now()];
             for (var i=1; i <= s.popprob; i++) s.popseq.push(i);
             s.popseq.sort(randOrder);               // randomized
                 
@@ -462,7 +462,10 @@
             // current earnings
             this.earned = 0;
 
-            
+
+            // add time stamp of explosion
+            this.time.push(Date.now());
+
             // save results
             this.save();
             
