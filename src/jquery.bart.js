@@ -117,7 +117,7 @@
                 earnings:        1000,       // potential earnings for each pump
                 popprob:         128,        // probability of popping (as 1 out of X)
                 radius:          48,         // balloon size
-                increment:       0.01,       // increment size of balloon at each pump
+                increment:       0.03,       // increment size of balloon at each pump
                 color:           '#DA110D',  // color of balloon
                 stroke_style:    '#000000',  // color of balloon stroke
                 stroke_width:    3,          // width of balloon stroke
