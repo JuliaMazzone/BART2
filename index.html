@@ -15,28 +15,38 @@
 	<script type="text/javascript" src="src/jquery.bart.js"></script>              <!-- the main BART plugin -->
 	<link rel="stylesheet" type="text/css" href="src/jquery.bart.css" />        <!-- additional styles for to make the BART look fancy -->
         
-	<!-- additional scripts to run the demo on this page -->
-	<script type="text/javascript">
-	//<![CDATA[
-	
-		// initialize the BART after the page has loaded
-		$(document).ready(function() {
-		
-			// create a BART with default values using 10 balloons
-			$("#bart").bart( 2 );
-		});
-	
-	//]]>
-	</script>
+        <!-- additional scripts to run the demo on this page -->
+        <script type="text/javascript">
+        //<![CDATA[
+        var userEmail = "";
+        $(document).ready(function() {
+            $("#startBtn").on("click", function() {
+                userEmail = $("#emailInput").val().trim();
+                if(userEmail !== "") {
+                    $("#startForm").hide();
+                    $("#bart").show().bart(2);
+                } else {
+                    alert("Por favor ingrese un email válido");
+                }
+            });
+        });
+        //]]>
+        </script>
     
 	</head>
 	<body>
 
-	<h1 style="text-align:center;">Online Balloon Analogue Risk Task (oBART)</h1>
-	<h2 style="text-align:center;">Example 1</h2>
-                        
-	<!-- load BART here -->
-	<div id="bart" style="margin: auto; text-align: center;"></div>
+        <h1 style="text-align:center;">Online Balloon Analogue Risk Task (oBART)</h1>
+        <h2 style="text-align:center;">Example 1</h2>
+
+        <div id="startForm" style="text-align:center;">
+            <p>Por favor ingrese su email para comenzar:</p>
+            <input type="email" id="emailInput" required />
+            <button id="startBtn">Comenzar</button>
+        </div>
+
+        <!-- load BART here -->
+        <div id="bart" style="margin: auto; text-align: center; display:none;"></div>
         
 		
 
