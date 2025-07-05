@@ -1,69 +1,62 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-  
+
 <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Globo Millonario 🎈</title>
+    <meta charset="utf-8" />
 
-	<head>
+    <!-- Fuentes y estilos -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="src/casino.css" />
+    <link rel="stylesheet" type="text/css" href="src/jquery.bart.css" />
 
-        <title>oBART: Ejemplo 1</title>
-        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="src/casino.css" />
-        
-	<meta charset="utf-8" />
-	
-	<!-- these files are required for the BART to work    -->
-	<script type="text/javascript" src="src/jquery-3.0.0.min.js"></script>	<!-- basic javascript library for dom manipulation -->
-	<script type="text/javascript" src="src/jcanvas.min.js"></script>      	<!-- the canvas plugin -->
-	<script type="text/javascript" src="src/jquery.bart.js"></script>              <!-- the main BART plugin -->
-	<link rel="stylesheet" type="text/css" href="src/jquery.bart.css" />        <!-- additional styles for to make the BART look fancy -->
-        
-        <!-- additional scripts to run the demo on this page -->
-        <script type="text/javascript">
-        //<![CDATA[
-        window.userEmail = "";
-        $(document).ready(function() {
-            $("#startBtn").on("click", function() {
-                const emailField = $("#emailInput")[0];
-                if(!emailField.checkValidity()) {
-                    alert("Por favor ingrese un email válido");
-                    emailField.reportValidity();
-                    return;
-                }
-                window.userEmail = emailField.value.trim();
-                $("#startForm").hide();
-                $("#bart").show().bart(2);
-            });
+    <!-- Librerías requeridas -->
+    <script type="text/javascript" src="src/jquery-3.0.0.min.js"></script>
+    <script type="text/javascript" src="src/jcanvas.min.js"></script>
+    <script type="text/javascript" src="src/jquery.bart.js"></script>
+
+    <!-- Script principal -->
+    <script type="text/javascript">
+    //<![CDATA[
+    window.userEmail = "";
+    $(document).ready(function() {
+        $("#startBtn").on("click", function() {
+            const emailField = $("#emailInput")[0];
+            if (!emailField.checkValidity()) {
+                alert("Por favor ingresá un email válido.");
+                emailField.reportValidity();
+                return;
+            }
+            window.userEmail = emailField.value.trim();
+            $("#startForm").hide();
+            $("#bart").show().bart(2);
         });
-        //]]>
-        </script>
-    
-	</head>
-	<body>
+    });
+    //]]>
+    </script>
+</head>
 
-        <h1>Globo Millonario 🎈</h1>
+<body>
 
-        <div id="startForm">
-            <p>🎉 ¡Bienvenido/a!
-En esta actividad vas a interactuar con una serie de globos virtuales.
-En cada ronda, vas a poder realizar acciones simples con cada globo.
+    <h1 class="main-title">🎰 Globo Millonario 🎈</h1>
 
-No hay respuestas correctas o incorrectas. Lo importante es que sigas tu propio criterio.
+    <div id="startForm" class="welcome-box">
+        <p><strong>🎉 ¡Bienvenido/a!</strong></p>
+        <p>En esta actividad vas a interactuar con una serie de globos virtuales.  
+        En cada ronda, podrás realizar acciones simples con cada globo.</p>
+        <p>No hay respuestas correctas o incorrectas. Lo importante es que sigas tu propio criterio.</p>
+        <p>La participación es anónima y no requiere habilidades previas.</p>
+        <p>Cuando estés listo/a, ingresá tu dirección de correo electrónico para comenzar:</p>
 
-Esta actividad es anónima y no requiere habilidades previas.
+        <input type="email" id="emailInput" required placeholder="ejemplo@correo.com" />
+        <br/><br/>
+        <button id="startBtn" class="start-button">Comenzar</button>
+    </div>
 
-Cuando estés listo/a, completá tu dirección de correo electrónico para comenzar.</p>
-            <p>Por favor ingrese su email para comenzar:</p>
-            <input type="email" id="emailInput" required />
-            <button id="startBtn">Comenzar</button>
-        </div>
-        
-		<p>Hacé clic para inflar.<p>
-        <!-- load BART here -->
-        <div id="bart" style="display:none;"></div>
-        
-		
+    <p class="instruction">🕹️ Hacé clic para inflar. Podes retirar tu recompensa cuando desees.</p>
 
-       
-	</body>
+    <div id="bart" style="display:none;"></div>
 
+</body>
 </html>
