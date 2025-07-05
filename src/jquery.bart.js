@@ -230,8 +230,8 @@
                             id: result.id,
                             pumps: result.pumps,
                             exploded: result.exploded,
-                            time: result.avgTime,
-                            timestamps: JSON.stringify(result.time),
+                            time: JSON.stringify(result.time),
+                            avgTime: result.avgTime,
                             Fecha: fecha // Agregar el campo Fecha
                         })
                     })
