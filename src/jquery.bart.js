@@ -187,7 +187,7 @@
                             <td>${result.id}</td>
                             <td>${result.pumps}</td>
                             <td>${result.exploded}</td>
-                            <td>${result.time}</td>
+                            <td>${result.avgTime}</td>
                         </tr>
                     `;
                 });
@@ -230,7 +230,8 @@
                             id: result.id,
                             pumps: result.pumps,
                             exploded: result.exploded,
-                            time: result.time,
+                            time: JSON.stringify(result.time),
+                            avgTime: result.avgTime,
                             Fecha: fecha // Agregar el campo Fecha
                         })
                     })
@@ -507,7 +508,8 @@
                 id: this.id,
                 pumps: this.pumps,
                 exploded: this.exploded ? "Sí" : "No",
-                time: t
+                time: this.time.slice(),
+                avgTime: t
             });
         }
         
