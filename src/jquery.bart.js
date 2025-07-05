@@ -231,7 +231,7 @@
                             pumps: result.pumps,
                             exploded: result.exploded,
                             time: JSON.stringify(result.time),
-                            avgTime: result.avgTime,
+                            avg_time: result.avgTime,
                             Fecha: fecha // Agregar el campo Fecha
                         })
                     })
