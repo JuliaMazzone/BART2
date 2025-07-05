@@ -311,13 +311,13 @@
         
         if(opts.sounds == true) {
             if((new Audio()).canPlayType('audio/mpeg') != "") {   // mp3 for IE
-                snds.inflate = (new Audio(opts.sndpath + 'inflate-slot.mp3'));
-                snds.explode = (new Audio(opts.sndpath + 'explode-slot.mp3'));
-                snds.cashin = (new Audio(opts.sndpath + 'collect-slot.mp3'));
+                snds.inflate = (new Audio(opts.sndpath + 'inflate.mp3'));
+                snds.explode = (new Audio(opts.sndpath + 'explode.mp3'));
+                snds.cashin = (new Audio(opts.sndpath + 'collect.mp3'));
             } else if((new Audio()).canPlayType('audio/x-wav')) { // wav for the rest
-                snds.inflate = (new Audio(opts.sndpath + 'inflate-slot.wav'));
-                snds.explode = (new Audio(opts.sndpath + 'explode-slot.wav'));
-                snds.cashin = (new Audio(opts.sndpath + 'collect-slot.wav'));
+                snds.inflate = (new Audio(opts.sndpath + 'inflate.wav'));
+                snds.explode = (new Audio(opts.sndpath + 'explode.wav'));
+                snds.cashin = (new Audio(opts.sndpath + 'collect.wav'));
             }
         }
  
@@ -437,9 +437,9 @@
             // sound
             if(opts.sounds == true & this.pumps > 0) {
                 if((new Audio()).canPlayType("audio/mpeg") != "") {   // mp3 for IE
-                    (new Audio(opts.sndpath + 'inflate-slot.mp3')).play();
+                    (new Audio(opts.sndpath + 'inflate.mp3')).play();
                 } else if((new Audio()).canPlayType("audio/x-wav")) { // wav for the rest
-                    (new Audio(opts.sndpath + 'inflate-slot.wav')).play();
+                    (new Audio(opts.sndpath + 'inflate.wav')).play();
                 }
             }
             
