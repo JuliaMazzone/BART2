@@ -220,6 +220,20 @@
                     const fecha = `${now.getFullYear().toString().slice(-2)}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
 
                     // Enviar los datos a la API
+                    if (typeof result.avgTime !== "number" || isNaN(result.avgTime)) {
+                        result.avgTime = 0;
+                    }
+
+                    console.log("\ud83d\udce4 Enviando datos:", {
+                        email: email,
+                        id: result.id,
+                        pumps: result.pumps,
+                        exploded: result.exploded,
+                        avg_time: result.avgTime,
+                        time: JSON.stringify(result.time),
+                        Fecha: fecha
+                    });
+
                     fetch(apiURL, {
                         method: "POST",
                         headers: {
@@ -230,8 +244,8 @@
                             id: result.id,
                             pumps: result.pumps,
                             exploded: result.exploded,
-                            time: JSON.stringify(result.time),
                             avg_time: result.avgTime,
+                            time: JSON.stringify(result.time),
                             Fecha: fecha // Agregar el campo Fecha
                         })
                     })
