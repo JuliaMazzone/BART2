@@ -114,7 +114,7 @@
         // default options
         var opts = {
             balloon: {                       // default settings for a balloon
-                earnings:        0.05,       // potential earnings for each pump
+                earnings:        1000,       // potential earnings for each pump
                 popprob:         128,        // probability of popping (as 1 out of X)
                 radius:          48,         // balloon size
                 increment:       0.01,       // increment size of balloon at each pump
@@ -157,8 +157,8 @@
             txt_next:    'Siguiente globo',                  // text on 'Next' button
             txt_balloon_number: 'Número de globo: ',          // text for balloon number
             txt_number_of_pumps: 'Número de infladas: ',      // text for number of pumps
-            txt_current_earned: 'Ganancia actual: ',          // text for current earnings
-            txt_total_earned: 'Ganancia total: ',             // text for total earnings
+            txt_current_earned: 'Ganancia actual: $',          // text for current earnings
+            txt_total_earned: 'Ganancia total: $',             // text for total earnings
             txt_prob_explosion: 'Probabilidad de explosión:', // text for probability of explosion
             txt_pumps_used: 'Porcentaje de infladas usadas:', // text for percentage of used pumps
             onload:    function() {},        // function to run before loading the script 
@@ -431,7 +431,7 @@
             this.pumps = this.pumps + 1;
         
             // calculate current earnings
-            this.earned = (new Number(this.pumps * this.earnings)).toFixed(2);
+            this.earned = (new Number(this.pumps * this.earnings)).toFixed(0);
             
                                 
             // sound
@@ -625,7 +625,7 @@
                     name:      'totearn',
                     fillStyle: '#FFD700',
                     font:      'bold 18pt Orbitron, sans-serif',
-                    text:      opts.txt_total_earned + '0.00'
+                    text:      opts.txt_total_earned + '0'
                 });
                 bottomY -= 50;
             }
@@ -653,7 +653,7 @@
                     name:      'curearn',
                     fillStyle: '#FFD700',
                     font:      'bold 18pt Orbitron, sans-serif',
-                    text:      opts.txt_current_earned + '0.00'
+                    text:      opts.txt_current_earned + '0'
                 });
             }
 
@@ -730,8 +730,8 @@
                         canvas.setLayer('pumpnum', { text: opts.txt_number_of_pumps + bal.pumps });
                     }
                     if(opts.showcurrentearned) {
-                        canvas.setLayer('curearn', { text: opts.txt_current_earned + 
-                                                            (new Number(bal.earned)).toFixed(2) });
+                        canvas.setLayer('curearn', { text: opts.txt_current_earned +
+                                                            (new Number(bal.earned)).toFixed(0) });
                     }
                     if(opts.showpopprob) {
                         canvas.setLayer('popprob', { text: opts.txt_prob_explosion + "\n\n" + 
@@ -773,7 +773,7 @@
                     canvas.setLayer('pumpnum', { text: opts.txt_number_of_pumps + '0' });
                 }
                 if(opts.showcurrentearned) {
-                    canvas.setLayer('curearn', { text: opts.txt_current_earned + '0.00' });
+                    canvas.setLayer('curearn', { text: opts.txt_current_earned + '0' });
                 }
                 if(opts.showballooncount) {
                     canvas.setLayer('balnum', { text: opts.txt_balloon_number + 
@@ -813,7 +813,7 @@
                 .on('click.bart', function(e) {
                        
                     // update counts
-                    opts.earned = (opts.earned*1 + bal.earned*1).toFixed(2);
+                    opts.earned = (opts.earned*1 + bal.earned*1).toFixed(0);
                     if(opts.showtotalearned) {
                         canvas.setLayer('totearn', { text: opts.txt_total_earned + opts.earned }).drawLayers();
                     }
