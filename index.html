@@ -18,11 +18,11 @@
         <!-- additional scripts to run the demo on this page -->
         <script type="text/javascript">
         //<![CDATA[
-        var userEmail = "";
+        window.userEmail = "";
         $(document).ready(function() {
             $("#startBtn").on("click", function() {
-                userEmail = $("#emailInput").val().trim();
-                if(userEmail !== "") {
+                window.userEmail = $("#emailInput").val().trim();
+                if(window.userEmail !== "") {
                     $("#startForm").hide();
                     $("#bart").show().bart(2);
                 } else {
