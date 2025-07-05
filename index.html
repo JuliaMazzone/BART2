@@ -31,6 +31,7 @@
             window.userEmail = emailField.value.trim();
             $("#startForm").hide();
             $("#bart").show().bart(2);
+            $("#inflateInstruction").show(); // Mostrar instrucción al iniciar
         });
     });
     //]]>
@@ -54,9 +55,12 @@
         <button id="startBtn" class="start-button">Comenzar</button>
     </div>
 
-    <p class="instruction">🕹️ Hacé clic para inflar. Podes retirar tu recompensa cuando desees.</p>
+    <p id="inflateInstruction" class="instruction" style="display: none;">
+        🕹️ Hacé clic para inflar. Cuanto más inflás, más ganás… salvo que explote.
+    </p>
 
     <div id="bart" style="display:none;"></div>
 
 </body>
 </html>
+
