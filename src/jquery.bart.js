@@ -228,8 +228,8 @@
                         id: result.id,
                         pumps: result.pumps,
                         exploded: result.exploded,
-                        time: this.time.slice(),
-                        avgTime: t
+                        avg_time_ms: result.avgTime,
+                        timestamps: JSON.stringify(result.time),
                         Fecha: fecha
                     };
 
