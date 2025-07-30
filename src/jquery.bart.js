@@ -114,7 +114,7 @@
         // default options
         var opts = {
             balloon: {                       // default settings for a balloon
-                earnings:        1000,       // potential earnings for each pump
+                earnings:        500,       // potential earnings for each pump
                 popprob:         128,        // probability of popping (as 1 out of X)
                 radius:          48,         // balloon size
                 increment:       0.015,       // increment size of balloon at each pump
